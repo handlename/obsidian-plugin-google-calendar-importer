@@ -7,7 +7,7 @@ import { DEFAULT_SETTINGS } from "../../types/settings";
 export class SettingsTab extends PluginSettingTab {
 	constructor(
 		app: App,
-		private plugin: Plugin,
+		plugin: Plugin,
 		private settings: GoogleCalendarImporterSettings,
 		private onSettingsChange: (settings: GoogleCalendarImporterSettings) => Promise<void>,
 	) {
