@@ -29,9 +29,7 @@ export function validateCalendarId(calendarId: string): boolean {
 	return emailPattern.test(calendarId);
 }
 
-export function validateTemplateS
-
-yntax(template: string): boolean {
+export function validateTemplateSyntax(template: string): boolean {
 	if (!template || template.trim() === "") {
 		return false;
 	}
