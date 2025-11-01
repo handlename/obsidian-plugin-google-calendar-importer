@@ -1,6 +1,5 @@
 import { Plugin } from "obsidian";
 import type { GoogleCalendarImporterSettings } from "./types/settings";
-import { DEFAULT_SETTINGS } from "./types/settings";
 import { SettingsRepository } from "./infrastructure/repositories/SettingsRepository";
 import { AuthService } from "./infrastructure/google/AuthService";
 import { GoogleCalendarClient } from "./infrastructure/google/GoogleCalendarClient";

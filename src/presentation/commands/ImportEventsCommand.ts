@@ -1,4 +1,4 @@
-import type { Editor, MarkdownView } from "obsidian";
+import { type Editor, MarkdownView, type MarkdownFileInfo } from "obsidian";
 import type { EventImportService } from "../../application/services/EventImportService";
 import type { GoogleCalendarImporterSettings } from "../../types/settings";
 import type { NotificationService } from "../notices/NotificationService";
@@ -58,8 +58,10 @@ export class ImportEventsCommand {
 		return {
 			id: "import-google-calendar-events",
 			name: "Import Google Calendar events",
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				this.execute(editor, view, settings);
+			editorCallback: (editor: Editor, ctx: MarkdownView | MarkdownFileInfo) => {
+				if (ctx instanceof MarkdownView) {
+					this.execute(editor, ctx, settings);
+				}
 			},
 		};
 	}
