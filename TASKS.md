@@ -16,7 +16,7 @@
 
 ### TASK-001: Node.js/TypeScript環境の更新
 
-- [ ] Node.js v24とTypeScript 5.9.3への移行
+- [x] Node.js v24とTypeScript 5.9.3への移行
   - **目的**: 最新の開発環境を構築し、型安全性とパフォーマンスを向上させる
   - **詳細**:
     - `.nvmrc`ファイルを作成し、Node.js v24を指定
@@ -30,7 +30,7 @@
 
 ### TASK-002: ESLintからBiomeへの移行
 
-- [ ] Biomeのセットアップとlint/format環境の構築
+- [x] Biomeのセットアップとlint/format環境の構築
   - **目的**: モダンで高速なリンター/フォーマッターに移行する
   - **詳細**:
     - ESLint関連パッケージとファイルを削除（`.eslintrc`, `.eslintignore`）
@@ -45,7 +45,7 @@
 
 ### TASK-003: 依存パッケージのインストール
 
-- [ ] 必要なライブラリの追加
+- [x] 必要なライブラリの追加
   - **目的**: プロジェクトに必要な外部ライブラリをインストールする
   - **詳細**:
     - 以下のパッケージをインストール:
@@ -64,7 +64,7 @@
 
 ### TASK-004: 型定義の作成
 
-- [ ] プロジェクト全体で使用する型定義を実装
+- [x] プロジェクト全体で使用する型定義を実装
   - **目的**: 型安全性を確保し、開発効率を向上させる
   - **詳細**:
     - `src/types/settings.ts`を作成
@@ -80,7 +80,7 @@
 
 ### TASK-005: エラーハンドリング基盤の実装
 
-- [ ] アプリケーション全体のエラー処理クラスを実装
+- [x] アプリケーション全体のエラー処理クラスを実装
   - **目的**: 統一的なエラーハンドリングとユーザーフレンドリーなエラーメッセージを実現する
   - **詳細**:
     - `src/application/errors/AppError.ts`を作成
@@ -93,7 +93,7 @@
 
 ### TASK-006: ユーティリティの実装
 
-- [ ] 共通ユーティリティ関数の実装
+- [x] 共通ユーティリティ関数の実装
   - **目的**: 再利用可能な共通機能を提供する
   - **詳細**:
     - `src/utils/logger.ts`を作成
@@ -114,7 +114,7 @@
 
 ### TASK-007: Google Calendar認証サービスの実装
 
-- [ ] サービスアカウント認証の実装
+- [x] サービスアカウント認証の実装
   - **目的**: Google Calendar APIへの安全な認証を確立する
   - **詳細**:
     - `src/infrastructure/google/AuthService.ts`を作成
@@ -130,7 +130,7 @@
 
 ### TASK-008: Google Calendar APIクライアントの実装
 
-- [ ] Calendar API v3のラッパー実装
+- [x] Calendar API v3のラッパー実装
   - **目的**: イベント取得機能を提供する
   - **詳細**:
     - `src/infrastructure/google/GoogleCalendarClient.ts`を作成
@@ -146,7 +146,7 @@
 
 ### TASK-009: 設定リポジトリの実装
 
-- [ ] プラグイン設定の永続化機能の実装
+- [x] プラグイン設定の永続化機能の実装
   - **目的**: 設定の保存・読み込み機能を提供する
   - **詳細**:
     - `src/infrastructure/repositories/SettingsRepository.ts`を作成
@@ -166,7 +166,7 @@
 
 ### TASK-010: 日付抽出サービスの実装
 
-- [ ] Daily Noteファイル名から日付を抽出する機能の実装
+- [x] Daily Noteファイル名から日付を抽出する機能の実装
   - **目的**: 現在開いているDaily Noteの日付を判定する
   - **詳細**:
     - `src/application/services/DateExtractorService.ts`を作成
@@ -182,7 +182,7 @@
 
 ### TASK-011: テンプレートフォーマットサービスの実装
 
-- [ ] イベントデータをMarkdownテキストにフォーマットする機能の実装
+- [x] イベントデータをMarkdownテキストにフォーマットする機能の実装
   - **目的**: ユーザー定義のテンプレートでイベントを整形する
   - **詳細**:
     - `src/application/services/TemplateFormatterService.ts`を作成
