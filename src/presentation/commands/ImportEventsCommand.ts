@@ -1,4 +1,4 @@
-import type { App, Editor, MarkdownView } from "obsidian";
+import type { Editor, MarkdownView } from "obsidian";
 import type { EventImportService } from "../../application/services/EventImportService";
 import type { GoogleCalendarImporterSettings } from "../../types/settings";
 import type { NotificationService } from "../notices/NotificationService";
@@ -9,7 +9,6 @@ export class ImportEventsCommand {
 	private logger: Logger;
 
 	constructor(
-		private app: App,
 		private eventImportService: EventImportService,
 		private notificationService: NotificationService,
 	) {
