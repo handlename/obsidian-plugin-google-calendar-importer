@@ -223,7 +223,7 @@
 
 ### TASK-013: 通知サービスの実装
 
-- [ ] ユーザー通知機能の実装
+- [x] ユーザー通知機能の実装
   - **目的**: 統一的なユーザーフィードバックを提供する
   - **詳細**:
     - `src/presentation/notices/NotificationService.ts`を作成
