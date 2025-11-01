@@ -1,94 +1,146 @@
-# Obsidian Sample Plugin
+# Google Calendar Importer for Obsidian
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+Google Calendarの予定をObsidianのDaily Notesにインポートするプラグインです。
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## 機能
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- 📅 Google Calendarの予定を1日分取得してDaily Noteに挿入
+- 🎨 カスタマイズ可能なテンプレート（通常予定・終日予定で別フォーマット）
+- 🌍 タイムゾーン対応
+- 🔒 サービスアカウント認証によるセキュアなアクセス
 
-## First time developing plugins?
+## インストール
 
-Quick starting guide for new plugin devs:
+### 前提条件
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+- Obsidian v0.15.0以降
+- Node.js v24以降（開発時のみ）
+- デスクトップ版Obsidian（Windows、macOS、Linux）
 
-## Releasing new releases
+### 手動インストール
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+1. 最新のリリースから`main.js`、`manifest.json`、`styles.css`をダウンロード
+2. Obsidianのvaultフォルダ内の`.obsidian/plugins/google-calendar-importer/`ディレクトリにファイルを配置
+3. Obsidianを再起動
+4. 設定→コミュニティプラグイン で「Google Calendar Importer」を有効化
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## セットアップ
 
-## Adding your plugin to the community plugin list
+### 1. Google Cloud Consoleでサービスアカウントを作成
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+詳細は[SETUP_GUIDE.md](./SETUP_GUIDE.md)を参照してください。
 
-## How to use
+概要：
+1. Google Cloud Consoleでプロジェクトを作成
+2. Calendar APIを有効化
+3. サービスアカウントを作成してJSONキーをダウンロード
+4. 対象のカレンダーをサービスアカウントと共有
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+### 2. プラグイン設定
 
-## Manually installing the plugin
+1. Obsidianの設定→Google Calendar Importer を開く
+2. **Service Account Key**: ダウンロードしたJSONキーの内容を貼り付け
+3. **Calendar ID**: カレンダーID（通常は`your-email@gmail.com`形式）を入力
+4. **Templates**: 必要に応じてテンプレートをカスタマイズ
+5. **Timezone**: タイムゾーンを設定（デフォルト: システムのタイムゾーン）
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+## 使い方
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint ./src/`
+1. Daily Noteを開く
+2. コマンドパレット（Ctrl/Cmd + P）を開く
+3. 「Import Google Calendar events」を選択
+4. カーソル位置に予定が挿入されます
 
-## Funding URL
+## テンプレートのカスタマイズ
 
-You can include funding URLs where people who use your plugin can financially support it.
+### 利用可能な変数
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+- `{{title}}`: 予定のタイトル
+- `{{startTime}}`: 開始時刻（通常予定のみ）
+- `{{endTime}}`: 終了時刻（通常予定のみ）
+- `{{description}}`: 予定の説明
+- `{{location}}`: 場所
+- `{{attendees}}`: 参加者（カンマ区切り）
 
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+### デフォルトテンプレート
+
+**通常予定:**
+```
+- {{startTime}}-{{endTime}}: {{title}}
 ```
 
-If you have multiple URLs, you can also do:
-
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+**終日予定:**
+```
+- [終日] {{title}}
 ```
 
-## API Documentation
+### カスタマイズ例
 
-See https://github.com/obsidianmd/obsidian-api
+```
+## {{startTime}} - {{title}}
+**場所:** {{location}}
+**説明:** {{description}}
+**参加者:** {{attendees}}
+```
+
+## トラブルシューティング
+
+### 認証エラーが発生する
+
+- サービスアカウントのJSONキーが正しく貼り付けられているか確認
+- カレンダーがサービスアカウントと共有されているか確認
+- JSONキーの形式が正しいか確認（`{`で始まり`}`で終わる）
+
+### イベントが見つからない
+
+- カレンダーIDが正しいか確認
+- 対象の日付に予定が存在するか確認
+- Daily Notesプラグインが有効になっているか確認
+
+### API使用量の上限に達した
+
+- Google Calendar APIの無料枠は1日100万リクエストです
+- しばらく待ってから再試行してください
+
+### ネットワークエラー
+
+- インターネット接続を確認
+- ファイアウォールやプロキシ設定を確認
+
+## セキュリティ
+
+- サービスアカウントキーはローカルに保存されます（`.obsidian/plugins/google-calendar-importer/data.json`）
+- APIアクセスは読み取り専用です（`calendar.readonly`スコープ）
+- 予定の編集・削除はできません
+
+## 開発
+
+```bash
+# 依存関係のインストール
+npm install
+
+# 開発モード（watch）
+npm run dev
+
+# ビルド
+npm run build
+
+# リント
+npm run lint
+
+# フォーマット
+npm run format
+```
+
+## ライセンス
+
+MIT License
+
+## サポート
+
+問題や要望は[GitHub Issues](https://github.com/handlename/obsidian-plugin-google-calendar-importer/issues)で報告してください。
+
+## クレジット
+
+- [Obsidian](https://obsidian.md) - 知識ベースアプリ
+- [Google Calendar API](https://developers.google.com/calendar) - カレンダーデータソース
