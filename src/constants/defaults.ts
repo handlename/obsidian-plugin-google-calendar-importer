@@ -1,6 +1,4 @@
-export const GOOGLE_CALENDAR_SCOPES = [
-	"https://www.googleapis.com/auth/calendar.readonly",
-];
+export const GOOGLE_CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
 export const MAX_EVENTS = 100;
 

@@ -1,14 +1,14 @@
 import { Plugin } from "obsidian";
-import type { GoogleCalendarImporterSettings } from "./types/settings";
-import { SettingsRepository } from "./infrastructure/repositories/SettingsRepository";
+import { DateExtractorService } from "./application/services/DateExtractorService";
+import { EventImportService } from "./application/services/EventImportService";
+import { TemplateFormatterService } from "./application/services/TemplateFormatterService";
 import { AuthService } from "./infrastructure/google/AuthService";
 import { GoogleCalendarClient } from "./infrastructure/google/GoogleCalendarClient";
-import { DateExtractorService } from "./application/services/DateExtractorService";
-import { TemplateFormatterService } from "./application/services/TemplateFormatterService";
-import { EventImportService } from "./application/services/EventImportService";
+import { SettingsRepository } from "./infrastructure/repositories/SettingsRepository";
+import { ImportEventsCommand } from "./presentation/commands/ImportEventsCommand";
 import { NotificationService } from "./presentation/notices/NotificationService";
 import { SettingsTab } from "./presentation/settings/SettingsTab";
-import { ImportEventsCommand } from "./presentation/commands/ImportEventsCommand";
+import type { GoogleCalendarImporterSettings } from "./types/settings";
 import { Logger } from "./utils/logger";
 
 export default class GoogleCalendarImporterPlugin extends Plugin {
@@ -55,20 +55,12 @@ export default class GoogleCalendarImporterPlugin extends Plugin {
 			templateFormatter,
 		);
 
-		const importCommand = new ImportEventsCommand(
-			eventImportService,
-			this.notificationService,
-		);
+		const importCommand = new ImportEventsCommand(eventImportService, this.notificationService);
 
 		this.addCommand(importCommand.getCommandDefinition(this.settings));
 
 		this.addSettingTab(
-			new SettingsTab(
-				this.app,
-				this,
-				this.settings,
-				this.saveSettings.bind(this),
-			),
+			new SettingsTab(this.app, this, this.settings, this.saveSettings.bind(this)),
 		);
 
 		this.logger.info("Google Calendar Importer plugin loaded");
@@ -87,10 +79,7 @@ export default class GoogleCalendarImporterPlugin extends Plugin {
 				await this.googleCalendarClient.initialize();
 				this.logger.info("Google Calendar client reinitialized after settings change");
 			} catch (error) {
-				this.logger.error(
-					"Failed to reinitialize Google Calendar client",
-					error as Error,
-				);
+				this.logger.error("Failed to reinitialize Google Calendar client", error as Error);
 			}
 		}
 	}

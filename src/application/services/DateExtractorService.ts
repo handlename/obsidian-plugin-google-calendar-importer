@@ -1,7 +1,7 @@
-import type { App, TFile } from "obsidian";
 import { parse } from "date-fns";
-import { AppError, ErrorCode } from "../errors/AppError";
+import type { App, TFile } from "obsidian";
 import { Logger } from "../../utils/logger";
+import { AppError, ErrorCode } from "../errors/AppError";
 
 export class DateExtractorService {
 	private logger: Logger;

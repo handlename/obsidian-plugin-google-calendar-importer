@@ -1,8 +1,12 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
 import type { Plugin } from "obsidian";
+import { type App, PluginSettingTab, Setting } from "obsidian";
 import type { GoogleCalendarImporterSettings } from "../../types/settings";
-import { validateServiceAccountKey, validateCalendarId, validateTemplateSyntax } from "../../utils/validators";
 import { DEFAULT_SETTINGS } from "../../types/settings";
+import {
+	validateCalendarId,
+	validateServiceAccountKey,
+	validateTemplateSyntax,
+} from "../../utils/validators";
 
 export class SettingsTab extends PluginSettingTab {
 	constructor(
@@ -54,7 +58,9 @@ export class SettingsTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Normal Event Template")
-			.setDesc("Template for regular events. Available variables: {{title}}, {{startTime}}, {{endTime}}, {{description}}, {{location}}, {{attendees}}")
+			.setDesc(
+				"Template for regular events. Available variables: {{title}}, {{startTime}}, {{endTime}}, {{description}}, {{location}}, {{attendees}}",
+			)
 			.addTextArea((text) =>
 				text
 					.setPlaceholder(DEFAULT_SETTINGS.templates.normalEvent)
@@ -71,7 +77,9 @@ export class SettingsTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("All-Day Event Template")
-			.setDesc("Template for all-day events. Available variables: {{title}}, {{description}}, {{location}}, {{attendees}}")
+			.setDesc(
+				"Template for all-day events. Available variables: {{title}}, {{description}}, {{location}}, {{attendees}}",
+			)
 			.addTextArea((text) =>
 				text
 					.setPlaceholder(DEFAULT_SETTINGS.templates.allDayEvent)

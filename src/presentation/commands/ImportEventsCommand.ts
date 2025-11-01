@@ -1,9 +1,9 @@
-import { type Editor, MarkdownView, type MarkdownFileInfo } from "obsidian";
+import { type Editor, type MarkdownFileInfo, MarkdownView } from "obsidian";
+import { AppError, ErrorCode } from "../../application/errors/AppError";
 import type { EventImportService } from "../../application/services/EventImportService";
 import type { GoogleCalendarImporterSettings } from "../../types/settings";
-import type { NotificationService } from "../notices/NotificationService";
-import { AppError, ErrorCode } from "../../application/errors/AppError";
 import { Logger } from "../../utils/logger";
+import type { NotificationService } from "../notices/NotificationService";
 
 export class ImportEventsCommand {
 	private logger: Logger;
@@ -28,11 +28,7 @@ export class ImportEventsCommand {
 
 			this.notificationService.showImportStart();
 
-			const eventCount = await this.eventImportService.importEvents(
-				editor,
-				file,
-				settings,
-			);
+			const eventCount = await this.eventImportService.importEvents(editor, file, settings);
 
 			if (eventCount === 0) {
 				this.notificationService.showWarning("イベントが見つかりませんでした");
@@ -47,9 +43,7 @@ export class ImportEventsCommand {
 			if (error instanceof AppError) {
 				this.notificationService.showErrorFromCode(error.code);
 			} else {
-				this.notificationService.showError(
-					"予期しないエラーが発生しました",
-				);
+				this.notificationService.showError("予期しないエラーが発生しました");
 			}
 		}
 	}

@@ -1,10 +1,10 @@
-import Mustache from "mustache";
 import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
+import Mustache from "mustache";
 import type { CalendarEvent } from "../../types/calendar";
 import type { GoogleCalendarImporterSettings } from "../../types/settings";
-import { AppError, ErrorCode } from "../errors/AppError";
 import { Logger } from "../../utils/logger";
+import { AppError, ErrorCode } from "../errors/AppError";
 
 interface TemplateData {
 	title: string;
@@ -22,17 +22,12 @@ export class TemplateFormatterService {
 		this.logger = new Logger("TemplateFormatterService");
 	}
 
-	formatEvents(
-		events: CalendarEvent[],
-		settings: GoogleCalendarImporterSettings,
-	): string {
+	formatEvents(events: CalendarEvent[], settings: GoogleCalendarImporterSettings): string {
 		if (events.length === 0) {
 			return "";
 		}
 
-		const formattedEvents = events.map((event) =>
-			this.formatSingleEvent(event, settings),
-		);
+		const formattedEvents = events.map((event) => this.formatSingleEvent(event, settings));
 
 		return formattedEvents.join("\n");
 	}
@@ -59,10 +54,7 @@ export class TemplateFormatterService {
 		}
 	}
 
-	private buildTemplateData(
-		event: CalendarEvent,
-		timezone: string,
-	): TemplateData {
+	private buildTemplateData(event: CalendarEvent, timezone: string): TemplateData {
 		const startTimeZoned = toZonedTime(event.startTime, timezone);
 		const endTimeZoned = toZonedTime(event.endTime, timezone);
 

@@ -1,17 +1,10 @@
 import type { ServiceAccountKey } from "../types/calendar";
 
-export function validateServiceAccountKey(
-	jsonString: string,
-): ServiceAccountKey | null {
+export function validateServiceAccountKey(jsonString: string): ServiceAccountKey | null {
 	try {
 		const key = JSON.parse(jsonString) as ServiceAccountKey;
 
-		if (
-			key.type === "service_account" &&
-			key.project_id &&
-			key.private_key &&
-			key.client_email
-		) {
+		if (key.type === "service_account" && key.project_id && key.private_key && key.client_email) {
 			return key;
 		}
 		return null;

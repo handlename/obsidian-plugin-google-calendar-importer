@@ -1,9 +1,9 @@
-import { google } from "googleapis";
 import type { GoogleAuth } from "google-auth-library";
+import { google } from "googleapis";
 import { AppError, ErrorCode } from "../../application/errors/AppError";
+import { GOOGLE_CALENDAR_SCOPES } from "../../constants/defaults";
 import type { ServiceAccountKey } from "../../types/calendar";
 import { validateServiceAccountKey } from "../../utils/validators";
-import { GOOGLE_CALENDAR_SCOPES } from "../../constants/defaults";
 
 export class AuthService {
 	private auth: GoogleAuth | null = null;

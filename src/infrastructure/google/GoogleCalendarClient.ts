@@ -1,10 +1,10 @@
-import { google } from "googleapis";
 import type { calendar_v3 } from "googleapis";
+import { google } from "googleapis";
 import { AppError, ErrorCode } from "../../application/errors/AppError";
-import type { CalendarEvent } from "../../types/calendar";
-import type { AuthService } from "./AuthService";
-import { Logger } from "../../utils/logger";
 import { MAX_EVENTS } from "../../constants/defaults";
+import type { CalendarEvent } from "../../types/calendar";
+import { Logger } from "../../utils/logger";
+import type { AuthService } from "./AuthService";
 
 export class GoogleCalendarClient {
 	private logger: Logger;
@@ -32,10 +32,7 @@ export class GoogleCalendarClient {
 		}
 	}
 
-	async getEventsForDate(
-		calendarId: string,
-		date: Date,
-	): Promise<CalendarEvent[]> {
+	async getEventsForDate(calendarId: string, date: Date): Promise<CalendarEvent[]> {
 		if (!this.calendar) {
 			throw AppError.fromCode(ErrorCode.AUTHENTICATION_ERROR);
 		}
@@ -47,9 +44,7 @@ export class GoogleCalendarClient {
 		endOfDay.setHours(23, 59, 59, 999);
 
 		try {
-			this.logger.info(
-				`Fetching events for ${calendarId} on ${date.toISOString()}`,
-			);
+			this.logger.info(`Fetching events for ${calendarId} on ${date.toISOString()}`);
 
 			const response = await this.calendar.events.list({
 				calendarId,
@@ -69,9 +64,7 @@ export class GoogleCalendarClient {
 		}
 	}
 
-	private convertToCalendarEvent(
-		event: calendar_v3.Schema$Event,
-	): CalendarEvent {
+	private convertToCalendarEvent(event: calendar_v3.Schema$Event): CalendarEvent {
 		const isAllDay = Boolean(event.start?.date);
 
 		const startTime = isAllDay
@@ -100,11 +93,7 @@ export class GoogleCalendarClient {
 	private handleApiError(error: unknown): never {
 		this.logger.error("API error occurred", error as Error);
 
-		if (
-			typeof error === "object" &&
-			error !== null &&
-			"code" in error
-		) {
+		if (typeof error === "object" && error !== null && "code" in error) {
 			const apiError = error as { code: number; message?: string };
 
 			switch (apiError.code) {
@@ -136,11 +125,7 @@ export class GoogleCalendarClient {
 		}
 
 		if (error instanceof Error && error.message.includes("ENOTFOUND")) {
-			throw new AppError(
-				"Network error",
-				ErrorCode.NETWORK_ERROR,
-				error,
-			);
+			throw new AppError("Network error", ErrorCode.NETWORK_ERROR, error);
 		}
 
 		throw new AppError(

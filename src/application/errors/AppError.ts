@@ -14,15 +14,12 @@ export enum ErrorCode {
 
 const ERROR_MESSAGES: Record<ErrorCode, string> = {
 	[ErrorCode.NETWORK_ERROR]: "ネットワーク接続を確認してください",
-	[ErrorCode.AUTHENTICATION_ERROR]:
-		"サービスアカウントキーを確認してください",
-	[ErrorCode.AUTHORIZATION_ERROR]:
-		"カレンダーへのアクセス権限がありません",
+	[ErrorCode.AUTHENTICATION_ERROR]: "サービスアカウントキーを確認してください",
+	[ErrorCode.AUTHORIZATION_ERROR]: "カレンダーへのアクセス権限がありません",
 	[ErrorCode.API_QUOTA_ERROR]: "API使用量の上限に達しました",
 	[ErrorCode.INVALID_DATE_FORMAT]: "Daily Noteの日付形式が不正です",
 	[ErrorCode.INVALID_SETTINGS]: "設定が不正です",
-	[ErrorCode.CALENDAR_NOT_FOUND]:
-		"指定されたカレンダーが見つかりません",
+	[ErrorCode.CALENDAR_NOT_FOUND]: "指定されたカレンダーが見つかりません",
 	[ErrorCode.NO_ACTIVE_FILE]: "ファイルを開いてください",
 	[ErrorCode.NOT_DAILY_NOTE]: "Daily Noteではありません",
 	[ErrorCode.TEMPLATE_ERROR]: "テンプレートの形式が不正です",

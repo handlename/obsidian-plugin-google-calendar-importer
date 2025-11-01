@@ -1,10 +1,10 @@
 import type { Editor, TFile } from "obsidian";
 import type { GoogleCalendarClient } from "../../infrastructure/google/GoogleCalendarClient";
+import type { GoogleCalendarImporterSettings } from "../../types/settings";
+import { Logger } from "../../utils/logger";
+import { AppError, ErrorCode } from "../errors/AppError";
 import type { DateExtractorService } from "./DateExtractorService";
 import type { TemplateFormatterService } from "./TemplateFormatterService";
-import type { GoogleCalendarImporterSettings } from "../../types/settings";
-import { AppError, ErrorCode } from "../errors/AppError";
-import { Logger } from "../../utils/logger";
 
 export class EventImportService {
 	private logger: Logger;
@@ -29,10 +29,7 @@ export class EventImportService {
 			this.logger.info(`Target date: ${date.toISOString()}`);
 
 			this.logger.info(`Fetching events from calendar: ${settings.calendarId}`);
-			const events = await this.googleCalendarClient.getEventsForDate(
-				settings.calendarId,
-				date,
-			);
+			const events = await this.googleCalendarClient.getEventsForDate(settings.calendarId, date);
 
 			if (events.length === 0) {
 				this.logger.info("No events found for the specified date");
@@ -40,10 +37,7 @@ export class EventImportService {
 			}
 
 			this.logger.info(`Formatting ${events.length} events`);
-			const formattedText = this.templateFormatter.formatEvents(
-				events,
-				settings,
-			);
+			const formattedText = this.templateFormatter.formatEvents(events, settings);
 
 			editor.replaceSelection(formattedText);
 			this.logger.info("Events inserted successfully");
