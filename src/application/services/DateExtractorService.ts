@@ -121,24 +121,54 @@ export class DateExtractorService {
 			}
 		}
 
-		// Extract year, month, day from the first occurrence of each token
-		let year: number | undefined;
-		let month: number | undefined;
-		let day: number | undefined;
+		// Extract year, month, day from captured groups
+		// For formats with multiple date tokens (e.g., YYYY/MM/YYYYMMDD or YYYY/MM/YYYY-MM-DD),
+		// we prioritize the last complete set of year, month, and day
+		const dateComponents: Array<{
+			year?: number;
+			month?: number;
+			day?: number;
+		}> = [];
+		let currentSet: { year?: number; month?: number; day?: number } = {};
 		let captureIndex = 1;
 
 		for (const token of tokens) {
-			if (token === "YYYY" && year === undefined) {
-				year = Number.parseInt(match[captureIndex], 10);
+			if (token === "YYYY") {
+				// Start a new date set when we encounter a year
+				if (currentSet.year !== undefined) {
+					dateComponents.push(currentSet);
+					currentSet = {};
+				}
+				currentSet.year = Number.parseInt(match[captureIndex], 10);
 				captureIndex++;
-			} else if ((token === "MM" || token === "M") && month === undefined) {
-				month = Number.parseInt(match[captureIndex], 10);
+			} else if (token === "MM" || token === "M") {
+				currentSet.month = Number.parseInt(match[captureIndex], 10);
 				captureIndex++;
-			} else if ((token === "DD" || token === "D") && day === undefined) {
-				day = Number.parseInt(match[captureIndex], 10);
+			} else if (token === "DD" || token === "D") {
+				currentSet.day = Number.parseInt(match[captureIndex], 10);
 				captureIndex++;
 			} else {
 				captureIndex++;
+			}
+		}
+
+		// Add the last set
+		if (Object.keys(currentSet).length > 0) {
+			dateComponents.push(currentSet);
+		}
+
+		// Find the last complete set (with year, month, and day)
+		let year: number | undefined;
+		let month: number | undefined;
+		let day: number | undefined;
+
+		for (let i = dateComponents.length - 1; i >= 0; i--) {
+			const set = dateComponents[i];
+			if (set.year !== undefined && set.month !== undefined && set.day !== undefined) {
+				year = set.year;
+				month = set.month;
+				day = set.day;
+				break;
 			}
 		}
 

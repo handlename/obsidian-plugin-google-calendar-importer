@@ -34,15 +34,37 @@ describe("DateExtractorService", () => {
 				assertDateEquals(result, 2025, 10, 28);
 			});
 
-			it("should extract date from YYYY/MM/YYYY-MM-DD format (reported issue)", () => {
+			it("should extract date from YYYY/MM/YYYY-MM-DD format", () => {
 				service = new DateExtractorService(mockApp, "YYYY/MM/YYYY-MM-DD");
 				const mockFile = {
-					path: "2025/11/2025-10-28.md",
+					path: "2025/10/2025-10-28.md",
 				} as TFile;
 
 				const result = service.extractDateFromFile(mockFile);
 
-				assertDateEquals(result, 2025, 11, 28);
+				assertDateEquals(result, 2025, 10, 28);
+			});
+
+			it("should extract date from YYYY/MM/YYYYMMDD format", () => {
+				service = new DateExtractorService(mockApp, "YYYY/MM/YYYYMMDD");
+				const mockFile = {
+					path: "2025/10/20251028.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 10, 28);
+			});
+
+			it("should extract date from YYYY/MM/YYYY-MM-DD format with different month", () => {
+				service = new DateExtractorService(mockApp, "YYYY/MM/YYYY-MM-DD");
+				const mockFile = {
+					path: "2025/11/2025-11-15.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 11, 15);
 			});
 
 			it("should extract date from YYYY/MM/DD format", () => {
@@ -65,6 +87,83 @@ describe("DateExtractorService", () => {
 				const result = service.extractDateFromFile(mockFile);
 
 				assertDateEquals(result, 2025, 3, 5);
+			});
+
+			it("should extract date from YYYYMMDD format (no separators)", () => {
+				service = new DateExtractorService(mockApp, "YYYYMMDD");
+				const mockFile = {
+					path: "20251028.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 10, 28);
+			});
+
+			it("should extract date from YYYY.MM.DD format (dot separator)", () => {
+				service = new DateExtractorService(mockApp, "YYYY.MM.DD");
+				const mockFile = {
+					path: "2025.10.28.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 10, 28);
+			});
+
+			it("should extract date from YYYY/YYYYMMDD format", () => {
+				service = new DateExtractorService(mockApp, "YYYY/YYYYMMDD");
+				const mockFile = {
+					path: "2025/20251028.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 10, 28);
+			});
+
+			it("should extract date from DD-MM-YYYY format", () => {
+				service = new DateExtractorService(mockApp, "DD-MM-YYYY");
+				const mockFile = {
+					path: "28-10-2025.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 10, 28);
+			});
+
+			it("should extract date from YYYY/MM/DD-YYYY-MM-DD format", () => {
+				service = new DateExtractorService(mockApp, "YYYY/MM/DD-YYYY-MM-DD");
+				const mockFile = {
+					path: "2025/10/28-2025-10-28.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 10, 28);
+			});
+
+			it("should extract date from M/D/YYYY format with single digits", () => {
+				service = new DateExtractorService(mockApp, "M/D/YYYY");
+				const mockFile = {
+					path: "3/5/2025.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 3, 5);
+			});
+
+			it("should extract date from YYYY-MM/DD format (mixed separators)", () => {
+				service = new DateExtractorService(mockApp, "YYYY-MM/DD");
+				const mockFile = {
+					path: "2025-10/28.md",
+				} as TFile;
+
+				const result = service.extractDateFromFile(mockFile);
+
+				assertDateEquals(result, 2025, 10, 28);
 			});
 
 			it("should handle paths without .md extension", () => {
