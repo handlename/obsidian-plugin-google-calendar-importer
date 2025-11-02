@@ -15,12 +15,7 @@ describe("DateExtractorService", () => {
 		} as unknown as App;
 	});
 
-	function assertDateEquals(
-		actual: Date,
-		year: number,
-		month: number,
-		day: number,
-	) {
+	function assertDateEquals(actual: Date, year: number, month: number, day: number) {
 		expect(actual.getFullYear()).toBe(year);
 		expect(actual.getMonth() + 1).toBe(month); // Convert 0-indexed to 1-indexed
 		expect(actual.getDate()).toBe(day);
@@ -40,10 +35,7 @@ describe("DateExtractorService", () => {
 			});
 
 			it("should extract date from YYYY/MM/YYYY-MM-DD format", () => {
-				service = new DateExtractorService(
-					mockApp,
-					"YYYY/MM/YYYY-MM-DD",
-				);
+				service = new DateExtractorService(mockApp, "YYYY/MM/YYYY-MM-DD");
 				const mockFile = {
 					path: "2025/10/2025-10-28.md",
 				} as TFile;
@@ -65,10 +57,7 @@ describe("DateExtractorService", () => {
 			});
 
 			it("should extract date from YYYY/MM/YYYY-MM-DD format with different month", () => {
-				service = new DateExtractorService(
-					mockApp,
-					"YYYY/MM/YYYY-MM-DD",
-				);
+				service = new DateExtractorService(mockApp, "YYYY/MM/YYYY-MM-DD");
 				const mockFile = {
 					path: "2025/11/2025-11-15.md",
 				} as TFile;
@@ -145,10 +134,7 @@ describe("DateExtractorService", () => {
 			});
 
 			it("should extract date from YYYY/MM/DD-YYYY-MM-DD format", () => {
-				service = new DateExtractorService(
-					mockApp,
-					"YYYY/MM/DD-YYYY-MM-DD",
-				);
+				service = new DateExtractorService(mockApp, "YYYY/MM/DD-YYYY-MM-DD");
 				const mockFile = {
 					path: "2025/10/28-2025-10-28.md",
 				} as TFile;
@@ -261,9 +247,7 @@ describe("DateExtractorService", () => {
 					service.extractDateFromFile(mockFile);
 					expect.fail("Should have thrown an error");
 				} catch (error: unknown) {
-					expect((error as { code: string }).code).toBe(
-						ErrorCode.INVALID_DATE_FORMAT,
-					);
+					expect((error as { code: string }).code).toBe(ErrorCode.INVALID_DATE_FORMAT);
 				}
 			});
 

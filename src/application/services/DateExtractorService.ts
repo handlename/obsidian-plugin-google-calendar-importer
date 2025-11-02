@@ -23,9 +23,7 @@ export class DateExtractorService {
 			format = dailyNotesPlugin.options?.format || "YYYY-MM-DD";
 			this.logger.info(`Using Daily Notes plugin format: ${format}`);
 		} else {
-			this.logger.warn(
-				"Daily Notes plugin not found, trying default format",
-			);
+			this.logger.warn("Daily Notes plugin not found, trying default format");
 			format = "YYYY-MM-DD";
 		}
 
@@ -34,15 +32,10 @@ export class DateExtractorService {
 
 	private parseFilePath(file: TFile, format: string): Date {
 		const pathWithoutExtension = file.path.replace(/\.md$/, "");
-		this.logger.info(
-			`Parsing file path: ${pathWithoutExtension} with format: ${format}`,
-		);
+		this.logger.info(`Parsing file path: ${pathWithoutExtension} with format: ${format}`);
 
 		try {
-			const dateComponents = this.extractDateComponents(
-				pathWithoutExtension,
-				format,
-			);
+			const dateComponents = this.extractDateComponents(pathWithoutExtension, format);
 
 			// Validate date components before creating Date object
 			if (
@@ -54,11 +47,7 @@ export class DateExtractorService {
 				throw new Error("Invalid date components");
 			}
 
-			const date = new Date(
-				dateComponents.year,
-				dateComponents.month - 1,
-				dateComponents.day,
-			);
+			const date = new Date(dateComponents.year, dateComponents.month - 1, dateComponents.day);
 
 			if (Number.isNaN(date.getTime())) {
 				throw new Error("Invalid date");
@@ -76,10 +65,7 @@ export class DateExtractorService {
 			this.logger.info(`Extracted date: ${date.toISOString()}`);
 			return date;
 		} catch (error) {
-			this.logger.error(
-				"Failed to parse date from file path",
-				error as Error,
-			);
+			this.logger.error("Failed to parse date from file path", error as Error);
 			throw new AppError(
 				`Failed to parse date from file path: ${pathWithoutExtension}`,
 				ErrorCode.INVALID_DATE_FORMAT,
@@ -108,9 +94,7 @@ export class DateExtractorService {
 		const match = path.match(regex);
 
 		if (!match) {
-			throw new Error(
-				`Path does not match format. Path: ${path}, Format: ${format}`,
-			);
+			throw new Error(`Path does not match format. Path: ${path}, Format: ${format}`);
 		}
 
 		// Find which capture groups correspond to year, month, day
@@ -180,11 +164,7 @@ export class DateExtractorService {
 
 		for (let i = dateComponents.length - 1; i >= 0; i--) {
 			const set = dateComponents[i];
-			if (
-				set.year !== undefined &&
-				set.month !== undefined &&
-				set.day !== undefined
-			) {
+			if (set.year !== undefined && set.month !== undefined && set.day !== undefined) {
 				year = set.year;
 				month = set.month;
 				day = set.day;
@@ -193,9 +173,7 @@ export class DateExtractorService {
 		}
 
 		if (year === undefined || month === undefined || day === undefined) {
-			throw new Error(
-				`Could not extract date components from path: ${path}`,
-			);
+			throw new Error(`Could not extract date components from path: ${path}`);
 		}
 
 		return { year, month, day };
