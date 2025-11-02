@@ -9,6 +9,8 @@ node_modules/
 # Build outputs
 main.js
 *.map
+release-assets/
+*.zip
 
 # Plugin data
 data.json

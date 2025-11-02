@@ -17,9 +17,28 @@ Google Calendarの予定をObsidianのDaily Notesにインポートするプラ�
 - Node.js v24以降（開発時のみ）
 - デスクトップ版Obsidian（Windows、macOS、Linux）
 
+### BRATを使用したインストール（推奨）
+
+[BRAT (Beta Reviewers Auto-update Tool)](https://github.com/TfTHacker/obsidian42-brat)を使用すると、GitHubリポジトリから直接プラグインをインストールし、自動更新を受け取ることができます。
+
+1. BRATプラグインをインストール（まだの場合）
+   - Obsidianの設定→コミュニティプラグイン→閲覧から「BRAT」を検索
+   - インストールして有効化
+2. BRATの設定を開く
+   - 設定→BRAT→Add Beta Plugin
+3. リポジトリURLを入力
+   ```
+   handlename/obsidian-plugin-google-calendar-importer
+   ```
+4. 「Add Plugin」をクリック
+5. プラグインが自動的にインストールされます
+6. 設定→コミュニティプラグイン で「Google Calendar Importer」を有効化
+
+BRATを使用すると、新しいバージョンがリリースされた際に自動的に更新されます。
+
 ### 手動インストール
 
-1. 最新のリリースから`main.js`、`manifest.json`、`styles.css`をダウンロード
+1. [最新のリリース](https://github.com/handlename/obsidian-plugin-google-calendar-importer/releases)から`main.js`、`manifest.json`、`styles.css`をダウンロード
 2. Obsidianのvaultフォルダ内の`.obsidian/plugins/google-calendar-importer/`ディレクトリにファイルを配置
 3. Obsidianを再起動
 4. 設定→コミュニティプラグイン で「Google Calendar Importer」を有効化

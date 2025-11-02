@@ -499,6 +499,52 @@
 
 ---
 
+## フェーズ11: リリース自動化
+
+### TASK-028: tagprのセットアップ
+
+- [x] tagprによる自動リリースの設定
+  - **目的**: バージョン管理とリリースプロセスを自動化する
+  - **詳細**:
+    - `.tagpr`設定ファイルを作成
+    - `manifest.json`と`package.json`のバージョン同期設定
+    - CHANGELOGの自動生成設定
+    - Conventional Commitsの採用
+  - **完了条件**:
+    - `.tagpr`ファイルが作成されている
+    - tagprの設定が適切に行われている
+
+### TASK-029: GitHub Actionsワークフローの作成
+
+- [x] リリース自動化ワークフローの実装
+  - **目的**: GitHub Actionsでリリースプロセスを完全自動化する
+  - **詳細**:
+    - `.github/workflows/release.yml`を作成
+    - tagprによるバージョンアップPR作成の自動化
+    - タグ作成時のリリースビルド自動化
+    - `main.js`、`manifest.json`、`styles.css`のアップロード
+    - immutableなリリースの実現（参考: https://songmu.jp/riji/entry/2025-09-05-coordinate-tagpr-and-goreleaser-with-immutable-releases.html）
+    - pinact (https://github.com/suzuki-shunsuke/pinact) による GitHub Actions のハッシュ固定
+  - **完了条件**:
+    - GitHub Actionsワークフローが作成されている
+    - 全てのActionsがSHA-256ハッシュで固定されている
+    - リリースが自動作成される
+    - 必要なファイルが自動アップロードされる
+
+### TASK-030: BRAT対応とドキュメント更新
+
+- [x] BRATによるインストールサポートとREADME更新
+  - **目的**: ユーザーがBRATを使って簡単にインストールできるようにする
+  - **詳細**:
+    - README.mdにBRATインストール手順を追加
+    - BRATに必要な`manifest.json`、`versions.json`の準備
+    - インストール方法のセクションを更新
+  - **完了条件**:
+    - README.mdにBRAT手順が追加されている
+    - BRATでインストール可能になっている
+
+---
+
 ## 依存関係マップ
 
 ```
