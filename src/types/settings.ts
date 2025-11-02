@@ -6,6 +6,7 @@ export interface GoogleCalendarImporterSettings {
 		allDayEvent: string;
 	};
 	timezone: string;
+	dailyNotePathFormat: string;
 }
 
 export const DEFAULT_SETTINGS: GoogleCalendarImporterSettings = {
@@ -16,4 +17,5 @@ export const DEFAULT_SETTINGS: GoogleCalendarImporterSettings = {
 		allDayEvent: "- [終日] {{title}}",
 	},
 	timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+	dailyNotePathFormat: "YYYY-MM-DD",
 };

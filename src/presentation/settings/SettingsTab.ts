@@ -55,6 +55,21 @@ export class SettingsTab extends PluginSettingTab {
 					}),
 			);
 
+		new Setting(containerEl)
+			.setName("Daily Note Path Format")
+			.setDesc(
+				"Format for daily note paths. Use YYYY for year, MM for month, DD for day. Example: YYYY/MM/YYYY-MM-DD matches '2024/01/2024-01-15.md'",
+			)
+			.addText((text) =>
+				text
+					.setPlaceholder("YYYY-MM-DD")
+					.setValue(this.settings.dailyNotePathFormat)
+					.onChange(async (value) => {
+						this.settings.dailyNotePathFormat = value;
+						await this.onSettingsChange(this.settings);
+					}),
+			);
+
 		containerEl.createEl("h3", { text: "Event Templates" });
 
 		new Setting(containerEl)
