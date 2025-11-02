@@ -1,6 +1,6 @@
 [tagpr]
 	releaseBranch = main
-	versionFile = manifest.json,manifest-beta.json,package.json
+	versionFile = manifest.json,package.json
 	vPrefix = true
 	changelog = true
 	release = draft
