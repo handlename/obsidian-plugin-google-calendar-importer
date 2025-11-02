@@ -19,6 +19,8 @@ export class TemplateFormatterService {
 	private logger: Logger;
 
 	constructor() {
+		Mustache.escape = (text) => text;
+
 		this.logger = new Logger("TemplateFormatterService");
 	}
 
