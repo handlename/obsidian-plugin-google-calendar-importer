@@ -20,8 +20,7 @@
   - 最新の安定版で、型安全性とDX（開発者体験）が向上
   - Obsidian Plugin APIの型定義との互換性が高い
   - `satisfies`演算子、`const` type parametersなど最新機能が利用可能
-- **不採用技術**: TypeScript 4.7.4（既存のバージョン）
-  - **不採用理由**: 最新の型推論機能やパフォーマンス改善が含まれていない
+- **採用**: 現在のプロジェクトで使用中
 
 #### Node.js v24
 - **選定理由**:
@@ -29,8 +28,7 @@
   - パフォーマンスとセキュリティの改善
   - 最新のV8エンジンによるJavaScript実行速度の向上
   - googleapis等のライブラリとの互換性が確保されている
-- **不採用技術**: Node.js v16
-  - **不採用理由**: サポート期限が近く、セキュリティ更新が終了する可能性がある
+- **採用**: 開発環境で使用中（本番ではObsidianの組み込みNode.js環境を使用）
 
 ### 2.2 ビルド＆開発ツール
 
@@ -49,12 +47,8 @@
   - TypeScript 5.9.3の最新構文を完全サポート
   - パフォーマンスが優れている（Prettier比で最大20倍高速）
   - ゼロコンフィグで動作可能
-- **不採用技術**: ESLint + Prettier
-  - **不採用理由**: 
-    - 設定が複雑化しやすい
-    - 2つのツールの統合管理が必要
-    - Biomeに比べて実行速度が遅い
-    - Node.js実装のためRust製Biomeよりもパフォーマンスが劣る
+- **採用**: Biome 2.3.2を使用中
+- **移行理由**: ESLintから移行し、開発体験とパフォーマンスを向上
 
 ### 2.3 外部ライブラリ
 
@@ -600,15 +594,19 @@ async importEvents(editor: Editor, file: TFile): Promise<void> {
 {
   "scripts": {
     "dev": "node esbuild.config.mjs",
-    "build": "tsc --noEmit && node esbuild.config.mjs production",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
-    "type-check": "tsc --noEmit",
-    "version": "node version-bump.mjs && git add manifest.json versions.json"
+    "release": "npm run build && node scripts/prepare-release.mjs"
   }
 }
 ```
+
+**変更点:**
+- `version`スクリプトを削除（tagprによる自動バージョン管理に移行）
+- `release`スクリプトを追加（リリースファイルの準備を自動化）
+- `type-check`スクリプトを削除（`build`に統合）
 
 ### 10.2 biome.json
 
@@ -765,35 +763,50 @@ data.json
 
 ### 12.2 移行手順
 
+**注意**: このセクションは歴史的な参考情報です。現在のプロジェクトは既に以下の変更が適用済みです。
+
 ```bash
-# 1. Node.jsバージョン切り替え
+# 1. Node.jsバージョン切り替え（完了済み）
 nvm use 24
 
-# 2. 既存の依存関係削除
+# 2. 既存の依存関係削除（完了済み）
 rm -rf node_modules package-lock.json
 
-# 3. パッケージ更新
+# 3. パッケージ更新（完了済み）
 npm install
 
-# 4. ESLint関連削除
+# 4. ESLint関連削除（完了済み）
 npm uninstall eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
 rm .eslintrc .eslintignore
 
-# 5. Biomeインストールと設定
+# 5. Biomeインストールと設定（完了済み）
 npm install --save-dev @biomejs/biome
-# biome.json を作成
+# biome.json を作成済み
 
-# 6. 新規依存追加
+# 6. 新規依存追加（完了済み）
 npm install googleapis date-fns date-fns-tz mustache
 npm install --save-dev @types/mustache @types/node
 
-# 7. ビルド確認
+# 7. リリースワークフローの改善（完了済み）
+# - scripts/prepare-release.mjs を追加
+# - .tagpr 設定を更新
+# - version-bump.mjs を削除（tagprに統合）
+
+# 8. ビルド確認
 npm run build
 
-# 8. Lint/Format確認
+# 9. Lint/Format確認
 npm run lint
 npm run format
+
+# 10. リリース準備確認
+npm run release
 ```
+
+**現在の状態**: 
+- ESLintからBiomeへの移行完了
+- tagprによる自動リリースワークフロー導入済み
+- Node.js v24、TypeScript 5.9.3、Biome 2.3.2を使用中
 
 ## 13. 今後の拡張可能性
 
