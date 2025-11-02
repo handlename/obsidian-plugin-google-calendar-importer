@@ -1,0 +1,56 @@
+name: tagpr
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  tagpr:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tagpr.outputs.tag }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Run tagpr
+        id: tagpr
+        uses: Songmu/tagpr@7191605433b03e11b313dbbc0efb80185170de4b # v1.9.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Setup Node.js
+        if: steps.tagpr.outputs.tag != ''
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        if: steps.tagpr.outputs.tag != ''
+        run: npm ci
+
+      - name: Build plugin
+        if: steps.tagpr.outputs.tag != ''
+        run: npm run build
+
+      - name: Upload release assets
+        if: steps.tagpr.outputs.tag != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh release upload ${{ steps.tagpr.outputs.tag }} \
+            main.js \
+            manifest.json \
+            styles.css \
+            --clobber
+
+      - name: Publish release
+        if: steps.tagpr.outputs.tag != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh release edit ${{ steps.tagpr.outputs.tag }} --draft=false
