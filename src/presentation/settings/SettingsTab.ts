@@ -1,5 +1,6 @@
 import type { Plugin } from "obsidian";
 import { type App, PluginSettingTab, Setting } from "obsidian";
+import { COMMON_TIMEZONES, getSystemTimezone } from "../../constants/timezones";
 import type { GoogleCalendarImporterSettings } from "../../types/settings";
 import { DEFAULT_SETTINGS } from "../../types/settings";
 import {
@@ -96,16 +97,35 @@ export class SettingsTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Timezone")
-			.setDesc("Timezone for event times (IANA timezone name)")
-			.addText((text) =>
-				text
-					.setPlaceholder("Asia/Tokyo")
-					.setValue(this.settings.timezone)
-					.onChange(async (value) => {
-						this.settings.timezone = value;
-						await this.onSettingsChange(this.settings);
-					}),
-			);
+			.setDesc("Timezone for displaying event times")
+			.addDropdown((dropdown) => {
+				// Add system timezone as the first option
+				const systemTz = getSystemTimezone();
+				dropdown.addOption(systemTz, `System (${systemTz})`);
+
+				// Add separator
+				dropdown.addOption("---", "---");
+
+				// Add common timezones
+				for (const tz of COMMON_TIMEZONES) {
+					if (tz !== systemTz) {
+						dropdown.addOption(tz, tz);
+					}
+				}
+
+				// Set current value
+				dropdown.setValue(this.settings.timezone);
+
+				// Handle change
+				dropdown.onChange(async (value) => {
+					// Skip separator
+					if (value === "---") {
+						return;
+					}
+					this.settings.timezone = value;
+					await this.onSettingsChange(this.settings);
+				});
+			});
 
 		new Setting(containerEl)
 			.setName("Reset to Defaults")
