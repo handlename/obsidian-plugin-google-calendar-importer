@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.0.3](https://github.com/handlename/obsidian-plugin-google-calendar-importer/compare/v0.0.2...v0.0.3) - 2025-11-02
+- refactor: migrate release workflow to tagpr structure by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/9
+- fix: rename package from obsidian-sample-plugin to google-calendar-importer by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/8
+- fix: remove manifest-beta.json from tagpr versionFile config by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/10
+- fix: exclude manifest.json from biome lint checks by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/13
+- feat: add template omit-if-empty functionality by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/12
+- chore: improve release workflow with prepare-release script by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/14
+- docs: update project documentation by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/15
+
 ## [v0.0.2](https://github.com/handlename/obsidian-plugin-google-calendar-importer/compare/v0.0.1...v0.0.2) - 2025-11-02
 - chore: update actions by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/5
 - fix: correct version extraction in release workflow by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/3
