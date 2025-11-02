@@ -1,43 +1,9 @@
-# tagpr configuration for Google Calendar Importer plugin
-# See: https://github.com/Songmu/tagpr
-
 [tagpr]
-# Enable tagpr
-enabled = true
-
-# Version file paths to update
-versionFile = ["manifest.json", "package.json", "versions.json"]
-
-# Command to execute before tagging
-command = "npm run version-bump"
-
-# Release configuration
-[tagpr.release]
-# Release type
-key = "Release"
-
-# Template for release title
-template = "Release {{.Tag}}"
-
-# Changelog configuration
-[tagpr.changelog]
-# Changelog file
-path = "CHANGELOG.md"
-
-# Template for changelog
-template = '''
-## {{.Tag}} ({{.Time.Format "2006-01-02"}})
-
-{{range .Commits -}}
-* {{.Subject}}
-{{end}}
-'''
-
-# Manifest configuration
-[tagpr.manifest]
-# Files to update version
-files = [
-  "manifest.json",
-  "package.json",
-  "versions.json"
-]
+	releaseBranch = main
+	versionFile = manifest.json,manifest-beta.json,package.json
+	vPrefix = true
+	changelog = true
+	release = draft
+	majorLabels = major
+	minorLabels = minor
+	command = npm run version
