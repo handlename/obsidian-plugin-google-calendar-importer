@@ -75,6 +75,13 @@ jobs:
             google-calendar-importer-${{ steps.get_version.outputs.VERSION }}.zip \
             --clobber
 
+      - name: Publish draft release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          TAG_NAME="${{ needs.tagpr.outputs.tagpr-tag }}"
+          gh release edit "$TAG_NAME" --draft=false
+
   # Release on tag push (for manual tag creation)
   release-on-tag:
     if: startsWith(github.ref, 'refs/tags/v')
