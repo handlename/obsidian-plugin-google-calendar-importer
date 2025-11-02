@@ -21,25 +21,45 @@ Runs TypeScript type checking and builds the production bundle.
 
 ### Linting
 ```bash
-npx eslint main.ts
+npm run lint
 ```
-or for all TypeScript files:
+Checks code with Biome linter.
+
 ```bash
-npx eslint *.ts
+npm run lint:fix
 ```
+Auto-fixes lint issues with Biome.
+
+### Formatting
+```bash
+npm run format
+```
+Formats code with Biome.
 
 ### Type Checking Only
 ```bash
 npx tsc -noEmit -skipLibCheck
 ```
 
-### Version Bumping
+### Release Preparation
 ```bash
-npm version patch  # for patch version
-npm version minor  # for minor version
-npm version major  # for major version
+npm run release
 ```
-This automatically updates manifest.json and versions.json.
+Builds the plugin and prepares release files in `release/` directory. Copies main.js, manifest.json, and styles.css.
+
+## Release Workflow
+
+### Version Management
+Version updates are handled by tagpr automatically through `.tagpr` configuration:
+- tagpr updates `manifest.json`, `package.json`, and `versions.json`
+- tagpr runs `npm run build && npm run release` command
+- Release files are prepared in `release/` directory
+- GitHub workflow uploads release assets automatically
+
+### PR Labels for Version Bumping
+- `major` label - Major version bump (breaking changes)
+- `minor` label - Minor version bump (new features)
+- Default - Patch version bump (bug fixes)
 
 ## System Utilities (macOS/Darwin)
 
@@ -52,7 +72,7 @@ This automatically updates manifest.json and versions.json.
 ### Git Commands
 - `git status` - Check repository status
 - `git add <files>` - Stage files
-- `git commit -m "<message>"` - Commit changes
+- `git commit -S -m "<message>"` - Commit changes with GPG signature
 - `git log` - View commit history
 - `git diff` - View changes
 
@@ -60,4 +80,16 @@ This automatically updates manifest.json and versions.json.
 ```bash
 node --version
 ```
-Should be v16 or higher.
+Should be v24 or compatible.
+
+## GitHub CLI Commands
+
+### Pull Request
+```bash
+gh pr create --title "<title>" --body "<body>" --base main
+```
+
+### View Repository
+```bash
+gh repo view
+```
