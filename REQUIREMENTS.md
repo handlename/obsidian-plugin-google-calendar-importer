@@ -177,10 +177,10 @@ ObsidianのDaily Notesに、Googleカレンダーの予定を効率的にイン�
 - **優先度**: 推奨
 - **基準**:
   - TypeScriptの型チェックエラーがないこと
-  - ESLintのルール違反がないこと
+  - Biomeのルール違反がないこと
   - 主要な関数に対してコメントが記述されていること
 - **根拠**: 将来の機能拡張やバグ修正を容易にする
-- **検証方法**: `npm run build`でビルドが成功すること
+- **検証方法**: `npm run build`でビルドが成功すること、`npm run lint`でエラーがないこと
 
 #### NFR-006: エラーハンドリング
 - **優先度**: 必須
@@ -235,10 +235,11 @@ ObsidianのDaily Notesに、Googleカレンダーの予定を効率的にイン�
 ### 4.1 技術的制約
 
 #### C-001: 技術スタック
-- **TypeScript 4.7.4**を使用
-- **Node.js v16以上**が必要
+- **TypeScript 5.9.3**を使用
+- **Node.js v24以上**が必要
 - **Obsidian Plugin API**に準拠
 - **googleapis**ライブラリを使用してGoogle Calendar APIにアクセス
+- **Biome 2.3.2**をリンター・フォーマッターとして使用
 
 #### C-002: プラットフォーム制約
 - Obsidianがサポートするプラットフォーム（Windows、macOS、Linux）で動作する

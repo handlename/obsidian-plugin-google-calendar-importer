@@ -142,6 +142,13 @@ BRATを使用すると、新しいバージョンがリリースされた際に�
 
 ## 開発
 
+### 前提条件
+- Node.js v24以降
+- TypeScript 5.9.3
+- Biome 2.3.2（リンター・フォーマッター）
+
+### 開発コマンド
+
 ```bash
 # 依存関係のインストール
 npm install
@@ -155,9 +162,34 @@ npm run build
 # リント
 npm run lint
 
+# リント（自動修正）
+npm run lint:fix
+
 # フォーマット
 npm run format
+
+# リリースファイルの準備
+npm run release
 ```
+
+### リリースワークフロー
+
+このプロジェクトは[tagpr](https://github.com/Songmu/tagpr)を使用した自動リリースワークフローを採用しています。
+
+1. PRにラベルを付与してバージョンを指定:
+   - `major`: メジャーバージョンアップ
+   - `minor`: マイナーバージョンアップ
+   - ラベルなし: パッチバージョンアップ
+
+2. PRがmainにマージされると、tagprが自動的に:
+   - バージョン番号を更新（manifest.json, package.json, versions.json）
+   - CHANGELOGを生成
+   - リリース用PRを作成
+
+3. リリースPRがマージされると、GitHub Actionsが:
+   - プラグインをビルド
+   - リリースアセット（main.js, manifest.json, styles.css）をアップロード
+   - ドラフトリリースを公開
 
 ## ライセンス
 

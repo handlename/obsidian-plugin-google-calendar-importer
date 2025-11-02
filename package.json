@@ -1,7 +1,7 @@
 {
 	"name": "google-calendar-importer",
 	"version": "0.0.1",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Import Google Calendar events into Daily Notes. Supports customizable templates and timezone conversion.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
