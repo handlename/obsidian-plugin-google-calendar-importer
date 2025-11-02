@@ -24,7 +24,7 @@ jobs:
         id: tagpr
         uses: Songmu/tagpr@9c294c8b7b1815a5f3b7c61d6ee6aa50ac25b030 # v1.8.4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   release:
     needs: tagpr
@@ -60,7 +60,7 @@ jobs:
 
       - name: Update release with assets (immutable)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           TAG_NAME="v${{ steps.get_version.outputs.VERSION }}"
           
@@ -104,7 +104,7 @@ jobs:
 
       - name: Create or update release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           TAG_NAME="${GITHUB_REF#refs/tags/}"
           
