@@ -60,7 +60,7 @@ export class SettingsTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Normal Event Template")
 			.setDesc(
-				"Template for regular events. Available variables: {{title}}, {{startTime}}, {{endTime}}, {{description}}, {{location}}, {{attendees}}",
+				"Template for regular events. Available variables: {{title}}, {{startTime}}, {{endTime}}, {{description}}, {{location}}, {{attendees}}. Leave empty to omit normal events from output.",
 			)
 			.addTextArea((text) =>
 				text
@@ -79,7 +79,7 @@ export class SettingsTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("All-Day Event Template")
 			.setDesc(
-				"Template for all-day events. Available variables: {{title}}, {{description}}, {{location}}, {{attendees}}",
+				"Template for all-day events. Available variables: {{title}}, {{description}}, {{location}}, {{attendees}}. Leave empty to omit all-day events from output.",
 			)
 			.addTextArea((text) =>
 				text

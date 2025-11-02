@@ -27,7 +27,14 @@ export class TemplateFormatterService {
 			return "";
 		}
 
-		const formattedEvents = events.map((event) => this.formatSingleEvent(event, settings));
+		const formattedEvents = events
+			.filter((event) => {
+				const template = event.isAllDay
+					? settings.templates.allDayEvent
+					: settings.templates.normalEvent;
+				return template.trim() !== "";
+			})
+			.map((event) => this.formatSingleEvent(event, settings));
 
 		return formattedEvents.join("\n");
 	}

@@ -24,7 +24,7 @@ export function validateCalendarId(calendarId: string): boolean {
 
 export function validateTemplateSyntax(template: string): boolean {
 	if (!template || template.trim() === "") {
-		return false;
+		return true;
 	}
 
 	const openBraces = (template.match(/{{/g) || []).length;
