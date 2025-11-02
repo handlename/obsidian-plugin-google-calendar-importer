@@ -49,7 +49,10 @@ jobs:
 
       - name: Get version from tag
         id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+        run: |
+          TAG="${{ needs.tagpr.outputs.tagpr-tag }}"
+          VERSION="${TAG#v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Create release assets
         run: |
@@ -62,7 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          TAG_NAME="v${{ steps.get_version.outputs.VERSION }}"
+          TAG_NAME="${{ needs.tagpr.outputs.tagpr-tag }}"
 
           # Upload individual files
           gh release upload "$TAG_NAME" \
