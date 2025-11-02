@@ -47,7 +47,7 @@ export default class GoogleCalendarImporterPlugin extends Plugin {
 			}
 		}
 
-		const dateExtractor = new DateExtractorService(this.app);
+		const dateExtractor = new DateExtractorService(this.app, this.settings.dailyNotePathFormat);
 		const templateFormatter = new TemplateFormatterService();
 		const eventImportService = new EventImportService(
 			this.googleCalendarClient,
