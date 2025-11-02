@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.1](https://github.com/handlename/obsidian-plugin-google-calendar-importer/compare/v0.1.0...v0.1.1) - 2025-11-02
+- fix: support hierarchical date formats with multiple date tokens by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/19
+
 ## [v0.1.0](https://github.com/handlename/obsidian-plugin-google-calendar-importer/compare/v0.0.3...v0.1.0) - 2025-11-02
 - feat: add configurable daily note path format by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/16
 - fix: disable HTML escaping in Mustache templates by @handlename in https://github.com/handlename/obsidian-plugin-google-calendar-importer/pull/18
